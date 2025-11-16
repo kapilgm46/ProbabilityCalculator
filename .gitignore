@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Calculator.Web/.vs
+/Calculator.Web/bin/Debug/net8.0
+/Calculator.Web/obj
+/Calculator.Web.Services/bin/Debug/net8.0
+/Calculator.Web.Services/obj
+/Calculator.Web.Tests/bin
+/Calculator.Web.Tests/obj
