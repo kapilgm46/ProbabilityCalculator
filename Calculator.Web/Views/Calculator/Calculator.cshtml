@@ -1,0 +1,85 @@
+﻿@model Calculator.Web.Models.CalculatorInputModel
+
+<div>
+    <h2>Calculator</h2>
+    <form id="frmCalc">
+        <!-- Probability A & B Input -->
+        <div class="double-row">
+            <div class="form-row">
+                <label class="form-label">Enter First Probability</label>
+                <input type="number" id="ipProbA" name="probA" class="form-control text-right" min="0" max="1" step="0.01" />
+                <span id="errorProbA" class="error-message"></span>
+            </div>
+            <div class="form-row">
+                <label class="form-label">Enter Second Probability</label>
+                <input type="number" id="ipProbB" name="probB" class="form-control text-right" min="0" max="1" step="0.01" />
+                <span id="errorProbB" class="error-message"></span>
+            </div>
+        </div>
+
+        <!-- Operation, Calculate -->
+        <div class="form-row">
+            <label class="form-label">Select Operation</label>
+            <select id="lstOperation" name="function" required class="form-control">
+                <option value="">No Selection</option>
+                <option value="combined">Combined</option>
+                <option value="either">Either</option>
+            </select>
+            <span id="errorOperation" class="error-message"></span>
+            <button type="button" id="btnCalculate" class="btn" style="margin:15px auto">Calculate</button>
+        </div>
+
+        <!-- Result -->
+        <div class="form-row">
+            <label class="form-label">Result:</label>
+            <input type="text" id="txtResult" readonly class="form-control" />
+        </div>
+    </form>
+</div>
+
+@* AJAX call to controller on button click *@
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btnCalculate').click(function () {
+            $('#errorProbA').text('');
+            $('#errorProbB').text('');
+            $('#errorOperation').text('');
+                var probA = $('#ipProbA').val();
+                var probB = $('#ipProbB').val();
+                var operation = $('#lstOperation').val();
+                $.ajax({
+                    url: '@Url.Action("Calculate", "Calculator")',
+                    type: 'POST',
+                    data: {
+                        ProbA: probA,
+                        ProbB: probB,
+                        Function: operation
+                    },
+                    success: function (response) {
+                        $('#txtResult').val(response.result);
+                    },
+                    error: function (err) {
+                        $('#errorProbA').text('');
+                        $('#errorProbB').text('');
+                        $('#errorOperation').text('');
+                                if (err.responseJSON) {
+                            var errors = err.responseJSON;
+                            if (errors.ProbA) {
+                                $('#errorProbA').text(errors.ProbA);
+                            }
+                            if (errors.ProbB) {
+                                $('#errorProbB').text(errors.ProbB);
+                            }
+                            if (errors.Function) {
+                                $('#errorOperation').text(errors.Function);
+                            }
+                        } else {
+                            alert('Error occurred while calculating.');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

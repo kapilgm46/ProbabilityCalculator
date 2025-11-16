@@ -1,0 +1,2 @@
+16-11-2025 03:14:14 PM | Type: combined | Inputs: 0.5, 0.5 | Result: 0.25
+16-11-2025 03:14:17 PM | Type: either | Inputs: 0.5, 0.5 | Result: 0.75
