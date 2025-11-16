@@ -35,7 +35,7 @@ dotnet run
 The App will be available at:
 https://localhost:44334/Calculator/Calculator
 
-##Logging
+## Logging
 A log file named App_logs.txt will be created in the project directory.
 
 Each entry includes:
